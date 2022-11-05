@@ -9,7 +9,7 @@ Notes:
 
   The objectives and usage of the rest of the scripts are as follows: Please run the python scripts directly or using the command line 'python <script_name.py> from the terminal.
 
-  (i) Image dataset download and data acquisition: Run the chembl_target_featurizer_Ki_with_shannon_mod_wo_H_with_smiles.py file directly to build the image dataset which will be saved in the folder target_images_mutagenicity_with_shannon_wo_H. This script also extracts and saves a descriptor set from the CHEMBL website to features_mutagenicity_with_shannon_with_smiles.csv.
+  (i) Image dataset download and data acquisition: Run the chembl_target_featurizer_Ki_with_shannon_mod_wo_H_with_smiles.py file directly to build the image dataset which will be saved in the folder target_images_mutagenicity_with_shannon_wo_H. This script also extracts and saves a descriptor set from the CHEMBL website to features_mutagenicity_with_shannon_with_smiles.csv which would be used in all other scripts as the dataset file.
 
   (ii) MLP_only_train_test_hybrid_without_shannon.py: This script models binary classification of toxicity data as per Ames mutagenicity dataset using MW as descriptor.  The model predicts binary classification of toxicity of molecules as per the test data set.
 
