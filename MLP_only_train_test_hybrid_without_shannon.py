@@ -1,4 +1,4 @@
-# This program predicts binary classicication of Ames Mutagenicity dataset with only MW as descriptors
+# This program predicts binary classicication of Ames Mutagenicity dataset with only MW as descriptor
 
 
 # import the necessary packages
