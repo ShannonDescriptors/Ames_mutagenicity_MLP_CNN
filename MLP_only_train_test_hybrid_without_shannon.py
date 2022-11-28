@@ -1,5 +1,4 @@
-# This program predicts binary classicication of Ames Mutagenicity dataset with only MW as descriptor
-
+### This program predicts binary classicication of Ames Mutagenicity dataset with only MW as the sole descriptor
 
 # import the necessary packages
 import random
@@ -25,8 +24,6 @@ from sklearn.metrics import confusion_matrix
 import sklearn.metrics as metrics
 
 
-
-
 # Getting the list of labels/ targets of molecules
 df_target = pd.read_csv('target_mutagenicity_with_shannon.csv', encoding='cp1252') 
 
@@ -40,8 +37,8 @@ df_new = pd.concat([ df_1, df_2], axis = 1)
 
     
 # Getting the max & min of the target column
-maxPrice = df.iloc[:,-1].max() 
-minPrice = df.iloc[:,-1].min() 
+maxPrice = df_new.iloc[:,-1].max() 
+minPrice = df_new.iloc[:,-1].min() 
 
 
 print("[INFO] constructing training/ testing split")
@@ -65,7 +62,6 @@ testContinuous = cs.transform(XtestTotalData.iloc[:,0:XtestTotalData.shape[1]-1]
 
 print("[INFO] processing input data after normalization....")
 XtrainData, XtestData = trainContinuous,testContinuous
-
 
 # create the MLP model
 mlp = KiNet_mlp.create_mlp(XtrainData.shape[1], regress = False) # the input dimension to mlp would be shape[1] of the matrix i.e. number of column features
@@ -130,13 +126,12 @@ plt.ylabel("Loss/Accuracy")
 plt.legend()
 plt.savefig('MLP_only_loss&accuracy')
 
-# forming the confusion matrix
+# evaluating the confusion matrix
 conf_mx = confusion_matrix(testY,pred_val)
 plt.matshow(conf_mx, cmap = 'binary')
 plt.show()
 
-# evaluating the AUC
-
+# evaluating the AUC of ROC curve
 # calculate the fpr (false positive) and tpr (true positives) for all thresholds of the classification
 preds = predictions
 fpr, tpr, threshold = metrics.roc_curve(testY, preds)
