@@ -72,7 +72,7 @@ class KiNet_mlp:
 
     def create_mlp(dim, regress = False):
 
-	# define our MLP Network: architecture dims Here 1000 - 500
+	# define our MLP Network: architecture dims Here 6600- 500
 
         model = Sequential()
         model.add(Dense(6600, input_dim = dim, activation = "relu"))
