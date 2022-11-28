@@ -1,4 +1,4 @@
-# This program evaluates a set of descriptors of molecules using smiles strings
+### This program evaluates a set of descriptors of molecules relevant to Ames Mutagenicity dataset using smiles strings
 
 # import necessary packages 
 import pandas as pd
@@ -310,6 +310,6 @@ df_feature = pd.DataFrame(feat)
 df_shannon = pd.DataFrame(shannon_arr)
 df_smiles = pd.DataFrame(smiles_actual)
 
-# Concatenate the target column to the df_feature, df_shannon and df_smiles columns: saving the csv for using it in modeling
+# Concatenate the target column to the df_feature, df_shannon and df_smiles columns: saving the .csv for using it in modeling
 df_feature_target = pd.concat([df_feature, df_shannon, df_smiles, df_target], axis=1)
 df_feature_target.to_csv('features_mutagenicity_with_shannon_with_smiles.csv', index=False)
