@@ -330,6 +330,7 @@ plt.show()
 
 # Estimating the AUC
 # calculate the fpr and tpr for all thresholds of the classification
+# fpr: false positive rate, tpr: true positive rate
 preds = predictions
 fpr, tpr, threshold = metrics.roc_curve(testY, preds)
 roc_auc = metrics.auc(fpr, tpr)
