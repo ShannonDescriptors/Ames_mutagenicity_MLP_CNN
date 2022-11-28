@@ -1,12 +1,10 @@
-# This program predicts binary classicication of Ames Mutagenicity dataset with Shannon entropy and MW as descriptors
-
+### This program predicts binary classicication of Ames Mutagenicity dataset with Shannon entropy (SMILES) and MW as descriptors
 
 # import the necessary packages
 import random
 import numpy as np
 import pandas as pd
 import scipy
-
 
 from KiNet_mlp import KiNet_mlp
 
@@ -32,17 +30,15 @@ df_target = pd.read_csv('target_mutagenicity_with_shannon.csv', encoding='cp1252
 # Getting the list of labels/ targets of molecules together with the features: This csv contains already evaluated Shannon entropy values as a feature, along with other features (including MW) and labels.
 df =  pd.read_csv('features_mutagenicity_with_shannon.csv', encoding='cp1252') 
 
-# constructing a new df column containng only MW, Shannon entropy values ana labels
+# constructing a new df column containng only MW, Shannon entropy values and labels
 df_1 = pd.DataFrame(df.iloc[:,6].values)
 df_2 = pd.DataFrame(df.iloc[:,2084].values)
 df_3 = pd.DataFrame(df.iloc[:,2085].values)
 df_new = pd.concat([ df_1, df_2, df_3 ], axis = 1)
     
 # Getting the max & min of the target column
-maxPrice = df.iloc[:,-1].max()  
-minPrice = df.iloc[:,-1].min() 
-
-
+maxPrice = df_new.iloc[:,-1].max()  
+minPrice = df_new.iloc[:,-1].min() 
 
 print("[INFO] constructing training/ testing split")
 split = train_test_split(df_new, test_size = 0.15, random_state = 42) 
@@ -65,7 +61,6 @@ testContinuous = cs.transform(XtestTotalData.iloc[:,0:XtestTotalData.shape[1]-1]
 
 print("[INFO] processing input data after normalization....")
 XtrainData, XtestData = trainContinuous,testContinuous
-
 
 # create the MLP model
 mlp = KiNet_mlp.create_mlp(XtrainData.shape[1], regress = False) # the input dimension to mlp would be shape[1] of the matrix i.e. number of column features
@@ -131,13 +126,12 @@ plt.ylabel("Loss/Accuracy")
 plt.legend()
 plt.savefig('MLP_only_loss&accuracy_with_shannon')
 
-# forming the confusion matrix
+# evaluating the confusion matrix
 conf_mx = confusion_matrix(testY,pred_val)
 plt.matshow(conf_mx, cmap = 'binary')
 plt.show()
 
-# Evaluating the AUC
-
+# Evaluating the AUC of ROC plot
 # calculate the fpr (false positive) and tpr (true positives) for all thresholds of the classification
 preds = predictions
 fpr, tpr, threshold = metrics.roc_curve(testY, preds)
