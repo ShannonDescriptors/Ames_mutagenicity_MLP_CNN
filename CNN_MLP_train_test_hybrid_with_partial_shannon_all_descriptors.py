@@ -1,5 +1,4 @@
-# This program predicts binary classicication of Ames Mutagenicity dataset with Shannon entropy (SMILES/ SMARTS/InChiKey-based), fractional Shannon entropy, MW and other descriptors using a hybrid MLP and 2D image dataset-based CNN model
-
+### This program predicts binary classicication of Ames Mutagenicity dataset with Shannon entropy (SMILES/ SMARTS/InChiKey-based), fractional Shannon entropy, MW and other descriptors using a hybrid MLP and 2D image dataset-based CNN model
 
 # import the necessary packages
 from imutils import paths
@@ -222,23 +221,16 @@ for i in range(0,len(df_smiles)):
 fp_mol = pd.DataFrame(fp_combined)
 
 
-# constructing a new df dataframe containng all descriptors estimated, shannon values, partial shannon and labels
+# constructing a new dataframe containng all descriptors estimated, shannon values, partial shannon and labels
 df_1 = pd.DataFrame(df.iloc[:,0:2084].values)
 df_2 = pd.DataFrame(df.iloc[:,2084].values)
 df_3 = pd.DataFrame(df.iloc[:,2086].values)
-
-
-# Getting the max & min of the target or labels column
-maxPrice = df.iloc[:,-1].max() 
-minPrice = df.iloc[:,-1].min() 
-# df_new = pd.concat([ df_1, df_2, df_3 ], axis = 1)
 df_new = pd.concat([ df_1, df_2, fp_mol, df_3 ], axis = 1)
-
     
 # Getting the max & min of the target column
 maxPrice = df_new.iloc[:,-1].max() # grab the maximum val in the training set's last column
 minPrice = df_new.iloc[:,-1].min() # grab the minimum val in the training set's last column
-# df_new = pd.concat([ df_1, df_2, df_3 ], axis = 1)
+
 
 # randomly sample the image paths to shuffle
 random.seed(42)
@@ -289,7 +281,7 @@ x = Dense(10, activation = "relu") (combinedInput)
 x = Dense(1, activation = "sigmoid") (x)
 
 
-#FINAL MODEL as 'model': taking into account feature data from MLP and images from CNN
+#FINAL MODEL as 'model': taking into account the feature data from MLP and images from CNN
 model = Model(inputs = [mlp.input, cnn.input], outputs = x)
 
 
