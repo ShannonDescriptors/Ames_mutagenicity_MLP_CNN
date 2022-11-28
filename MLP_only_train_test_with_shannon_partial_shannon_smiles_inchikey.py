@@ -1,5 +1,4 @@
-# This program predicts binary classicication of Ames Mutagenicity dataset with Shannon entropy (SMILES/ SMARTS/InChiKey-based), fractional Shannon entropy, bond (type) frequency and MW as descriptors
-
+### This program predicts binary classicication of Ames Mutagenicity dataset with Shannon entropy (SMILES/ SMARTS/InChiKey-based), fractional Shannon entropy, bond (type) frequency and MW as descriptors
 
 # import the necessary packages
 from imutils import paths
@@ -7,7 +6,6 @@ import random
 import os
 import numpy as np
 import pandas as pd
-
 
 from KiNet_mlp import KiNet_mlp
 
@@ -44,9 +42,7 @@ df =  pd.read_csv('features_mutagenicity_with_shannon_with_smiles.csv', encoding
 df_smiles = df.iloc[:,2085].values
 
 
-
 # Calculating the Shannon entropy for each smiles string
-
 # smiles regex definition
 SMI_REGEX_PATTERN = r"""(\[[^\]]+]|Br?|Cl?|N|O|S|P|F|I|b|c|n|o|s|p|\(|\)|\.|=|#|-|\+|\\|\/|:|~|@|\?|>>?|\*|\$|\%[0-9]{2}|[0-9])"""
 regex = re.compile(SMI_REGEX_PATTERN)
@@ -117,7 +113,6 @@ def shannon_entropy_smiles(mol_smiles):
 smarts_REGEX_PATTERN =  r"""(\[[^\]]+]|Br?|Cl?|N|O|S|P|F|I|b|c|n|o|s|p|\(|\)|\.|=|#|-|\+|\\|\/|:|~|@|\?|>>?|\*|\$|\%[0-9]{2}|[0-9])"""
 regex = re.compile(smarts_REGEX_PATTERN)
 
-
 def shannon_entropy_smarts(mol_smiles):
     
     smiles = mol_smiles
@@ -181,7 +176,6 @@ def shannon_entropy_smarts(mol_smiles):
     # shannon = math.exp(-shannon)    
         
     return shannon   
-
 
 
 # Constructing the padded array of partial shannon per molecule
@@ -344,7 +338,7 @@ for j in range(0,len(df_smiles)):
     
 max_len_smiles = max(len_smiles)
 
-# Getting the fingerprints to use as descriptor array
+# collecting the fingerprints to use as descriptor array
 shannon_arr = []
 shannon_arr_smarts = []
 shannon_arr_inchikey = []
@@ -392,9 +386,8 @@ for i in range(0,len(df_smiles)):
   ### The atom list as per rdkit in string form
   atom_list_input_mol = []
   for atom_rdkit in mol.GetAtoms():
-     atom_list_input_mol.append(str(atom_rdkit.GetSymbol()))     
+     atom_list_input_mol.append(str(atom_rdkit.GetSymbol()))
         
-     
   freq_list_input_mol = freq_atom_list(atom_list_input_mol)
   
 # The bond list as per rdkit in string form
@@ -405,6 +398,7 @@ for i in range(0,len(df_smiles)):
 # bond frequency dictionary  
   freq_list_input_mol_bond = freq_bond_list(bond_list_input_mol) 
   
+# estimating the fractional or partial Shannon entropy
   ps = []
   ps_inchikey = []
   
@@ -418,7 +412,6 @@ for i in range(0,len(df_smiles)):
       ps.append(partial_shannon)
       ps_inchikey.append(partial_shannon_inchikey)
       
-
   ps_arr = ps_padding(ps, max_len_smiles)   
   ps_arr_inchikey = ps_padding(ps_inchikey, max_len_smiles)  
   
@@ -430,9 +423,8 @@ for i in range(0,len(df_smiles)):
   fp_combined.append(ps_arr_inchikey)
   
   
-# partial or fractional shannon_entropy as feature
+# partial or fractional shannon_entropy and bond frequency as input features
 fp_mol = pd.DataFrame(fp_combined)
-
 
 # constructing a new df column containng only MW, shannon values, partial shannon values, bond frequency values and labels
 df_1 = pd.DataFrame(df.iloc[:,6].values)
@@ -442,12 +434,10 @@ df_3 = pd.DataFrame(df.iloc[:,2086].values)
 df_22 = pd.DataFrame(shannon_arr_smarts)
 df_222 = pd.DataFrame( shannon_arr_inchikey)
 
-
 # Getting the max & min of the target column
 maxPrice = df.iloc[:,-1].max() 
 minPrice = df.iloc[:,-1].min()
 
-# df_new = pd.concat([ df_1, df_2, df_3 ], axis = 1)
 df_new = pd.concat([ df_1, df_2, df_22, df_222, fp_mol, df_3 ], axis = 1)
 # df_new = pd.concat([ df_1, df_2, fp_mol, df_3 ], axis = 1)
 
@@ -473,7 +463,6 @@ testContinuous = cs.transform(XtestTotalData.iloc[:,0:XtestTotalData.shape[1]-1]
 
 print("[INFO] processing input data after normalization....")
 XtrainData, XtestData = trainContinuous,testContinuous
-
 
 # create the MLP model
 mlp = KiNet_mlp.create_mlp(XtrainData.shape[1], regress = False) # the input dimension to mlp would be shape[1] of the matrix i.e. number of column features
