@@ -1,10 +1,23 @@
+# Ames_mutagenicity_MLP_CNN
+
+Harnessing Shannon entropy of molecular symbols in deep neural networks to enhance prediction accuracy
+------------------------------------------------------------------------------------------------------
+This repository holds the codes pertaining to Fig. 2c of the article 'Harnessing Shannon entropy of molecular symbols in deep neural networks to enhance prediction accuracy'.
+
+Description
+-----------
+Shannon entropy framework has been demonstrated as an efficient descriptor for classification-type machine learning problem using (i) MLP-based and (ii) MLP+CNN based-deep neural networks. In this specific case, we model classify the toxicity labels as per the Ames mutagenicity data set. The specific objectives of the codes are described in the Notes section below. The basic dataset has been provided in the repository in the form of .csv files.
+
+Usage
+-----
 1. Download or make a clone of the repository. Unzip the features_mutagenicity_with_shannon_with_smiles.rar to be used as a .csv data file
 2. Make a new conda environment using the environment file 'mlp_dnn.yml'
 3. Run the python files directly using a python IDE or from command line
 
+Example: python MLP_only_train_test_with_shannon_partial_shannon_smiles_inchikey.py
 
-Notes:
-
+Notes
+-----
   The function files are KiNet_mlp.py and image_and_table_processing.py. Therefore, directly run the other python files apart from these. 
 
   The objectives and usage of the rest of the scripts are as follows: Please run the python scripts directly or using the command line 'python <script_name.py> from the terminal.
