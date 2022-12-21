@@ -6,7 +6,7 @@ This repository holds the codes pertaining to Fig. 2c of the article 'Harnessing
 
 Description
 -----------
-Shannon entropy framework has been demonstrated as an efficient descriptor for classification-type machine learning problem using (i) MLP-based and (ii) MLP+CNN based-deep neural networks. In this specific case, we model classify the toxicity labels as per the Ames mutagenicity data set. The specific objectives of the codes are described in the Notes section below. The basic dataset has been provided in the repository in the form of .csv files.
+Shannon entropy framework has been demonstrated as an efficient descriptor for classification-type machine learning problem using (i) MLP-based and (ii) MLP+CNN based-deep neural networks. In this specific case, we model or classify the toxicity labels as per the Ames mutagenicity data set. The specific objectives of the codes are described in the Notes section below. The basic dataset has been provided in the repository in the form of .csv files within the 'features_mutagenicity_with_shannon_with_smiles.rar' file.
 
 Usage
 -----
